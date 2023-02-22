@@ -4,6 +4,7 @@ import kz.khairollayev.bookstore.controller.dto.BookCreateDto;
 import kz.khairollayev.bookstore.model.Book;
 import kz.khairollayev.bookstore.service.BookService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,7 +18,10 @@ public class BookController {
     }
 
     @PostMapping("/api/books")
-    public Long createBook(@RequestBody BookCreateDto createDto) {
-        return bookService.createBook(createDto.getName(), createDto.getQuantity());
+    public ResponseEntity<?> createBook(@RequestBody BookCreateDto createDto) {
+        String name = bookService
+                .createBook(createDto).getName();
+
+        return ResponseEntity.ok().body("Book saved - " + name);
     }
 }

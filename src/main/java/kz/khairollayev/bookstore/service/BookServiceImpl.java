@@ -1,8 +1,10 @@
 package kz.khairollayev.bookstore.service;
 
+import kz.khairollayev.bookstore.controller.dto.BookCreateDto;
 import kz.khairollayev.bookstore.model.Book;
 import kz.khairollayev.bookstore.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,11 +20,14 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Long createBook(String name, Integer quantity) {
+    public Book createBook(BookCreateDto createDto) {
         Book book = new Book();
-        book.setName(name);
-        book.setQuantity(quantity);
+        book.setName(createDto.getName());
+        book.setAuthor(createDto.getAuthor());
+//        book.setCategory();
+        book.setPrice(createDto.getPrice());
+        book.setQuantity(createDto.getQuantity());
 
-        return bookRepository.save(book).getId();
+        return bookRepository.save(book);
     }
 }
